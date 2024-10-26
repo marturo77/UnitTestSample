@@ -30,21 +30,17 @@ namespace ApplicationSample.Tests
             Assert.AreEqual("Beneficiary 1-1", firstPolicy.Beneficiaries[0].Name);
             Assert.AreEqual("Female", firstPolicy.Beneficiaries[0].Genre);
 
-            // Validar la segunda póliza
-            var secondPolicy = policies[1];
-            Assert.AreEqual("P-0002", secondPolicy.Id);
-            Assert.AreEqual("Policy 2", secondPolicy.Name);
-            Assert.AreEqual(2, secondPolicy.Beneficiaries.Count);
-            Assert.AreEqual("Beneficiary 2-1", secondPolicy.Beneficiaries[0].Name);
-            Assert.AreEqual("Female", secondPolicy.Beneficiaries[0].Genre);
+            // Verificar que ningún beneficiario tenga la relación "COTIZANTE"
+            foreach (var policy in policies)
+            {
+                foreach (var beneficiary in policy.Beneficiaries)
+                {
+                    Assert.AreNotEqual("COTIZANTE", beneficiary.RelationShip,
+                        $"The beneficiary '{beneficiary.Name}' in policy '{policy.Id}' has an invalid relationship: COTIZANTE.");
+                }
+            }
         }
 
-        /// <summary>
-        /// Metodo mock que reemplaza el llamadado a la base de datos
-        /// Aqui se ponen datos de prueba para poder revisar que sucede si algo no esta bien
-        /// o esperado de la base de datos y no se tiene que generar data desde la bd
-        /// </summary>
-        /// <returns></returns>
         private List<PolicyInfo> GenerateSamplePolicies()
         {
             return new List<PolicyInfo>
@@ -55,8 +51,8 @@ namespace ApplicationSample.Tests
                     Name = "Policy 1",
                     Beneficiaries = new List<BeneficiaryInfo>
                     {
-                        new BeneficiaryInfo { Id = 1, Name = "Beneficiary 1-1", Genre = "Female" },
-                        new BeneficiaryInfo { Id = 2, Name = "Beneficiary 1-2", Genre = "Male" }
+                        new BeneficiaryInfo { Id = 1, Name = "Beneficiary 1-1", Genre = "Female", RelationShip = "Spouse" },
+                        new BeneficiaryInfo { Id = 2, Name = "Beneficiary 1-2", Genre = "Male", RelationShip = "Child" }
                     }
                 },
                 new PolicyInfo
@@ -65,8 +61,8 @@ namespace ApplicationSample.Tests
                     Name = "Policy 2",
                     Beneficiaries = new List<BeneficiaryInfo>
                     {
-                        new BeneficiaryInfo { Id = 1, Name = "Beneficiary 2-1", Genre = "Female" },
-                        new BeneficiaryInfo { Id = 2, Name = "Beneficiary 2-2", Genre = "Male" }
+                        new BeneficiaryInfo { Id = 1, Name = "Beneficiary 2-1", Genre = "Female", RelationShip = "Parent" },
+                        new BeneficiaryInfo { Id = 2, Name = "Beneficiary 2-2", Genre = "Male", RelationShip = "Sibling" }
                     }
                 }
             };

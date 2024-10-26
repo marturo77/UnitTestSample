@@ -1,14 +1,16 @@
-﻿namespace ApplicationSample.Policy
+﻿using System.Collections.Generic;
+
+namespace ApplicationSample.Policy
 {
     /// <summary>
-    ///
+    /// Servicio para gestionar pólizas y beneficiarios
     /// </summary>
     internal class PolicyService : IPolicyService
     {
         /// <summary>
-        /// Obtiene la lista de polizas de la base de datos
+        /// Obtiene la lista de pólizas de la base de datos
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Lista de pólizas</returns>
         public List<PolicyInfo> GetPolicies()
         {
             var policies = new List<PolicyInfo>();
@@ -27,14 +29,18 @@
         }
 
         /// <summary>
-        /// Obtiene los beneficiarios de la base de datos
+        /// Genera una lista de beneficiarios con relaciones predefinidas
         /// </summary>
-        /// <param name="policyNumber"></param>
-        /// <returns></returns>
+        /// <param name="policyNumber">Número de póliza</param>
+        /// <returns>Lista de beneficiarios</returns>
 
         private List<BeneficiaryInfo> GenerateSampleBeneficiaries(int policyNumber)
         {
             var beneficiaries = new List<BeneficiaryInfo>();
+            var random = new Random();
+
+            // Lista de relaciones posibles
+            var relationships = new List<string> { "COTIZANTE", "HIJO", "PADRE", "MADRE" };
 
             for (int j = 1; j <= 3; j++) // Agrega 3 beneficiarios a cada póliza
             {
@@ -42,7 +48,8 @@
                 {
                     Id = j,
                     Name = $"BeneficiaryName {policyNumber}-{j}",
-                    Genre = j % 2 == 0 ? "M" : "F"
+                    Genre = j % 2 == 0 ? "M" : "F",
+                    RelationShip = relationships[random.Next(relationships.Count)]
                 });
             }
 

@@ -1,6 +1,6 @@
 ﻿using ApplicationSample.Policy;
 
-Console.WriteLine("Hello, World!");
+Console.WriteLine("Lista de pólizas del excel");
 
 PolicyService policyService = new PolicyService();
 
@@ -11,10 +11,10 @@ var policies = policyService.GetPolicies();
 Console.Write("Policy ID   Policy Name   ");
 for (int i = 1; i <= 3; i++) // Supongamos que cada póliza tiene hasta 3 beneficiarios
 {
-    Console.Write($"Beneficiary {i} ID   Beneficiary {i} Name       Beneficiary {i} Genre   ");
+    Console.Write($"Beneficiary {i} ID   Beneficiary {i} Name       Beneficiary {i} Genre   Beneficiary {i} Relationship   ");
 }
 Console.WriteLine();
-Console.WriteLine(new string('-', 110));
+Console.WriteLine(new string('-', 150));
 
 // Imprimir cada póliza con sus beneficiarios en una sola fila
 foreach (var policy in policies)
@@ -27,12 +27,12 @@ foreach (var policy in policies)
         if (i < policy.Beneficiaries.Count)
         {
             var beneficiary = policy.Beneficiaries[i];
-            Console.Write($"{beneficiary.Id,-16}{beneficiary.Name,-22}{beneficiary.Genre,-18}");
+            Console.Write($"{beneficiary.Id,-16}{beneficiary.Name,-22}{beneficiary.Genre,-18}{beneficiary.RelationShip,-24}");
         }
         else
         {
             // Dejar las columnas vacías si no hay suficientes beneficiarios
-            Console.Write($"{string.Empty,-16}{string.Empty,-22}{string.Empty,-18}");
+            Console.Write($"{string.Empty,-16}{string.Empty,-22}{string.Empty,-18}{string.Empty,-24}");
         }
     }
     Console.WriteLine();
