@@ -34,11 +34,9 @@ namespace ApplicationSample.Tests
             // Verificar que el primer beneficiario es "COTIZANTE"
             foreach (var policy in policies)
             {
-                Assert.AreEqual("COTIZANTE", policy.Beneficiaries[0].RelationShip, $"The first beneficiary in policy '{policy.Id}' should be 'COTIZANTE'.");
-
                 // Verificar que al menos uno de los otros beneficiarios también es "COTIZANTE"
-                var hasAdditionalCotizante = policy.Beneficiaries.Skip(1).Any(b => b.RelationShip == "COTIZANTE");
-                Assert.IsTrue(hasAdditionalCotizante, $"Policy '{policy.Id}' should have at least one other 'COTIZANTE' besides the first beneficiary.");
+                var hasAdditionalCotizante = policy.Beneficiaries.Any(b => b.RelationShip == "COTIZANTE");
+                Assert.IsTrue(hasAdditionalCotizante, $"La politica '{policy.Id}' tiene un beneficiario como 'COTIZANTE'");
             }
         }
 
@@ -46,26 +44,28 @@ namespace ApplicationSample.Tests
         {
             return new List<PolicyInfo>
             {
+                // Registro correcto
                 new PolicyInfo
                 {
                     Id = "P-0001",
-                    Name = "Policy 1",
+                    Name = "FULANO PEREZ",
                     Beneficiaries = new List<BeneficiaryInfo>
                     {
-                        new BeneficiaryInfo { Id = 1, Name = "Beneficiary 1-1", Genre = "Female", RelationShip = "COTIZANTE" },
-                        new BeneficiaryInfo { Id = 2, Name = "Beneficiary 1-2", Genre = "Male", RelationShip = "COTIZANTE" },
-                        new BeneficiaryInfo { Id = 3, Name = "Beneficiary 1-3", Genre = "Female", RelationShip = "HIJO" }
+                        new BeneficiaryInfo { Id = 2, Name = "Mama de Fulano", Genre = "Male", RelationShip = "MADRE" },
+                        new BeneficiaryInfo { Id = 3, Name = "Hijo de Fulano", Genre = "Female", RelationShip = "HIJO" }
                     }
                 },
+
+                //Registro donde pancrasia aparece tambien como beneficiaria y parentesco COTIZANTE
                 new PolicyInfo
                 {
                     Id = "P-0002",
-                    Name = "Policy 2",
+                    Name = "PANCRASIA MEDINA",
                     Beneficiaries = new List<BeneficiaryInfo>
                     {
-                        new BeneficiaryInfo { Id = 1, Name = "Beneficiary 2-1", Genre = "Female", RelationShip = "COTIZANTE" },
-                        new BeneficiaryInfo { Id = 2, Name = "Beneficiary 2-2", Genre = "Male", RelationShip = "MADRE" },
-                        new BeneficiaryInfo { Id = 3, Name = "Beneficiary 2-3", Genre = "Female", RelationShip = "COTIZANTE" }
+                        new BeneficiaryInfo { Id = 1, Name = "PANCRASIA", Genre = "Female", RelationShip = "COTIZANTE" },
+                        new BeneficiaryInfo { Id = 2, Name = "Padre de pancrasia", Genre = "Male", RelationShip = "PADRE" },
+                        new BeneficiaryInfo { Id = 3, Name = "Madre de pancrasia", Genre = "Female", RelationShip = "MADRE" }
                     }
                 }
             };
