@@ -6,7 +6,7 @@
     internal class PolicyService : IPolicyService
     {
         /// <summary>
-        ///
+        /// Obtiene la lista de polizas de la base de datos
         /// </summary>
         /// <returns></returns>
         public List<PolicyInfo> GetPolicies()
@@ -27,7 +27,7 @@
         }
 
         /// <summary>
-        ///
+        /// Obtiene los beneficiarios de la base de datos
         /// </summary>
         /// <param name="policyNumber"></param>
         /// <returns></returns>
@@ -41,7 +41,7 @@
                 beneficiaries.Add(new BeneficiaryInfo
                 {
                     Id = j,
-                    Name = $"Beneficiary {policyNumber}-{j}",
+                    Name = $"BeneficiaryName {policyNumber}-{j}",
                     Genre = j % 2 == 0 ? "M" : "F"
                 });
             }
