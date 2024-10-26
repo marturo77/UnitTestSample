@@ -4,10 +4,10 @@ using Moq;
 namespace ApplicationSample.Tests
 {
     /// <summary>
-    ///
+    ///Lista donde hay cotizantes entre los beneficiarios
     /// </summary>
     [TestClass]
-    public class PolicyListingTests
+    public class PolicyWrongListingTests
     {
         /// <summary>
         /// Prueba unitaria que verifica si hay algun beneficiario como cotizante
@@ -33,7 +33,7 @@ namespace ApplicationSample.Tests
             {
                 // Verificar que al menos uno de los otros beneficiarios también es "COTIZANTE"
                 var hasAdditionalCotizante = policy.Beneficiaries.Any(b => b.RelationShip == "COTIZANTE");
-                Assert.IsFalse(hasAdditionalCotizante, $"La politica '{policy.Id}' tiene un beneficiario como 'COTIZANTE'");
+                Assert.IsTrue(hasAdditionalCotizante, $"La politica '{policy.Id}' tiene un beneficiario como 'COTIZANTE'");
             }
         }
 
@@ -65,6 +65,7 @@ namespace ApplicationSample.Tests
                     Name = "PANCRASIA MEDINA",
                     Beneficiaries = new List<BeneficiaryInfo>
                     {
+                        new BeneficiaryInfo { Id = 1, Name = "PANCRASIA", Genre = "Female", RelationShip = "COTIZANTE" },
                         new BeneficiaryInfo { Id = 2, Name = "Padre de pancrasia", Genre = "Male", RelationShip = "PADRE" },
                         new BeneficiaryInfo { Id = 3, Name = "Madre de pancrasia", Genre = "Female", RelationShip = "MADRE" }
                     }

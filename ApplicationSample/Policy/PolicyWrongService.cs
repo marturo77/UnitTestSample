@@ -1,9 +1,10 @@
 ﻿namespace ApplicationSample.Policy
 {
     /// <summary>
-    /// Servicio para gestionar pólizas y beneficiarios y los lista como se quiere sin cotizante entre los beneficiarios
+    /// Servicio para gestionar pólizas y beneficiarios, pero los lista mal porque
+    /// deja cotizantes entre los beneficiarios
     /// </summary>
-    internal class PolicyService : IPolicyService
+    internal class PolicyWrongService : IPolicyService
     {
         /// <summary>
         /// Obtiene la lista de pólizas de la base de datos
