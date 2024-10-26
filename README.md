@@ -42,7 +42,7 @@ El proyecto consiste en la creación y manipulación de una lista de pólizas de
 3. **Validación de Reglas de Negocio**:
    - Verificar que los datos generados cumplan con las reglas de negocio establecidas:
      - El primer beneficiario debe ser siempre el titular o "COTIZANTE".
-     - Los demás beneficiarios deben tener relaciones aleatorias seleccionadas de una lista limitada de opciones.
+     - Los demás beneficiarios deben tener relaciones aleatorias seleccionadas de una lista limitada de opciones, PADRE, MADRE, HIJO.
    - Las pruebas unitarias aseguran que la lógica implementada en `PolicyService` cumple con estas reglas, detectando cualquier inconsistencia en el modelo de datos generado.
 
 4. **Pruebas Automatizadas para Consistencia**:
