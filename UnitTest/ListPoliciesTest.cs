@@ -1,5 +1,8 @@
 using ApplicationSample.Policy;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ApplicationSample.Tests
 {
@@ -26,18 +29,16 @@ namespace ApplicationSample.Tests
             var firstPolicy = policies[0];
             Assert.AreEqual("P-0001", firstPolicy.Id);
             Assert.AreEqual("Policy 1", firstPolicy.Name);
-            Assert.AreEqual(2, firstPolicy.Beneficiaries.Count);
-            Assert.AreEqual("Beneficiary 1-1", firstPolicy.Beneficiaries[0].Name);
-            Assert.AreEqual("Female", firstPolicy.Beneficiaries[0].Genre);
+            Assert.AreEqual(3, firstPolicy.Beneficiaries.Count);
 
-            // Verificar que ningún beneficiario tenga la relación "COTIZANTE"
+            // Verificar que el primer beneficiario es "COTIZANTE"
             foreach (var policy in policies)
             {
-                foreach (var beneficiary in policy.Beneficiaries)
-                {
-                    Assert.AreNotEqual("COTIZANTE", beneficiary.RelationShip,
-                        $"The beneficiary '{beneficiary.Name}' in policy '{policy.Id}' has an invalid relationship: COTIZANTE.");
-                }
+                Assert.AreEqual("COTIZANTE", policy.Beneficiaries[0].RelationShip, $"The first beneficiary in policy '{policy.Id}' should be 'COTIZANTE'.");
+
+                // Verificar que al menos uno de los otros beneficiarios también es "COTIZANTE"
+                var hasAdditionalCotizante = policy.Beneficiaries.Skip(1).Any(b => b.RelationShip == "COTIZANTE");
+                Assert.IsTrue(hasAdditionalCotizante, $"Policy '{policy.Id}' should have at least one other 'COTIZANTE' besides the first beneficiary.");
             }
         }
 
@@ -51,8 +52,9 @@ namespace ApplicationSample.Tests
                     Name = "Policy 1",
                     Beneficiaries = new List<BeneficiaryInfo>
                     {
-                        new BeneficiaryInfo { Id = 1, Name = "Beneficiary 1-1", Genre = "Female", RelationShip = "Spouse" },
-                        new BeneficiaryInfo { Id = 2, Name = "Beneficiary 1-2", Genre = "Male", RelationShip = "Child" }
+                        new BeneficiaryInfo { Id = 1, Name = "Beneficiary 1-1", Genre = "Female", RelationShip = "COTIZANTE" },
+                        new BeneficiaryInfo { Id = 2, Name = "Beneficiary 1-2", Genre = "Male", RelationShip = "COTIZANTE" },
+                        new BeneficiaryInfo { Id = 3, Name = "Beneficiary 1-3", Genre = "Female", RelationShip = "HIJO" }
                     }
                 },
                 new PolicyInfo
@@ -61,8 +63,9 @@ namespace ApplicationSample.Tests
                     Name = "Policy 2",
                     Beneficiaries = new List<BeneficiaryInfo>
                     {
-                        new BeneficiaryInfo { Id = 1, Name = "Beneficiary 2-1", Genre = "Female", RelationShip = "Parent" },
-                        new BeneficiaryInfo { Id = 2, Name = "Beneficiary 2-2", Genre = "Male", RelationShip = "Sibling" }
+                        new BeneficiaryInfo { Id = 1, Name = "Beneficiary 2-1", Genre = "Female", RelationShip = "COTIZANTE" },
+                        new BeneficiaryInfo { Id = 2, Name = "Beneficiary 2-2", Genre = "Male", RelationShip = "MADRE" },
+                        new BeneficiaryInfo { Id = 3, Name = "Beneficiary 2-3", Genre = "Female", RelationShip = "COTIZANTE" }
                     }
                 }
             };

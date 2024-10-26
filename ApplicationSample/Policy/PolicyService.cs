@@ -39,8 +39,8 @@ namespace ApplicationSample.Policy
             var beneficiaries = new List<BeneficiaryInfo>();
             var random = new Random();
 
-            // Lista de relaciones posibles
-            var relationships = new List<string> { "COTIZANTE", "HIJO", "PADRE", "MADRE" };
+            // Lista de relaciones posibles, excluyendo "COTIZANTE" para los beneficiarios aleatorios
+            var relationships = new List<string> { "HIJO", "PADRE", "MADRE" };
 
             for (int j = 1; j <= 3; j++) // Agrega 3 beneficiarios a cada póliza
             {
@@ -49,7 +49,7 @@ namespace ApplicationSample.Policy
                     Id = j,
                     Name = $"BeneficiaryName {policyNumber}-{j}",
                     Genre = j % 2 == 0 ? "M" : "F",
-                    RelationShip = relationships[random.Next(relationships.Count)]
+                    RelationShip = j == 1 ? "COTIZANTE" : relationships[random.Next(relationships.Count)]
                 });
             }
 
